@@ -1,0 +1,27 @@
+Dependency Isolation 🔒
+Virtual Environment (uv venv): Creates an isolated sandbox 🏖️ for this specific project. It prevents package version conflicts with other Python projects on your machine.
+
+Package Manager (uv): Installs specific tools you need:
+
+📊 Data Manipulation: pandas, numpy, openpyxl
+
+📈 Visualization: matplotlib, plotly
+
+🤖 Machine Learning: scikit-learn
+
+🚀 App & Prototyping: streamlit, jupyter, ipykernel
+
+Version Control & Documentation 📜
+Git (git init, git commit): Acts as a time machine ⏳ for your code. It tracks every change, lets you roll back mistakes, and helps with collaboration.
+
+Documentation (README.md): Tells anyone reviewing your repo (including your future self) what the project does and how to run it.
+
+
+What I Did
+
+First i created the root folder Ai_Data_Analyst
+then Create a venv file for storing all the dependencies related to the project after that used the command to activate the venv file that is 
+ " venv\Scripts\Activate.ps1"
+
+to install the dependencies i used " uv pip install library names"
+

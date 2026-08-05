@@ -1,0 +1,132 @@
+Functional Requirements
+
+Our application should allow a user to:
+
+✔ Upload CSV/Excel files
+
+✔ View dataset summary
+
+✔ Detect missing values
+
+✔ Detect duplicate rows
+
+✔ Detect outliers
+
+✔ Generate charts
+
+✔ Automatically clean data
+
+✔ Train ML models
+
+✔ Compare different models
+
+✔ Explain predictions
+
+✔ Chat with the dataset
+
+✔ Export a PDF report
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Non-Functional Requirements
+
+The application should:
+
+Handle datasets up to ~100 MB smoothly.
+Be easy to use without coding knowledge.
+Display results quickly.
+Be modular so new features can be added easily.
+Use only free libraries and services.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Software Development Life Cycle (SDLC)
+
+We will follow a professional workflow:
+
+Requirement Analysis
+        ↓
+System Design
+        ↓
+Environment Setup
+        ↓
+Data Processing
+        ↓
+Visualisation
+        ↓
+Machine Learning
+        ↓
+AI Features
+        ↓
+Testing
+        ↓
+Deployment
+---------------------------------------------------------------------------------------------------------------------------------
+
+Overall Architecture
+                User
+
+                  │
+
+                  ▼
+
+        Streamlit Frontend
+
+                  │
+
+                  ▼
+
+       Data Processing Engine
+
+                  │
+
+      ┌───────────┼────────────┐
+
+      ▼           ▼            ▼
+
+Cleaning      Visualization   ML Engine
+
+      │           │            │
+
+      └───────────┼────────────┘
+
+                  ▼
+
+            AI Assistant
+
+                  ▼
+
+          PDF Report Generator
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Tech Stack
+Programming
+Python 3.13 (or the latest stable 3.12+ if you prefer)
+
+Data Science
+Pandas
+NumPy
+Scikit-learn
+
+Visualisation
+Plotly
+Matplotlib
+
+AI
+LangChain (optional)
+Ollama (run models locally for free) or a free inference API
+
+Web Application
+Streamlit
+
+Version Control
+Git
+GitHub
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Package Manager
+
+We'll use uv because it is fast and modern.
