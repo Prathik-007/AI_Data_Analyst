@@ -25,3 +25,139 @@ then Create a venv file for storing all the dependencies related to the project 
 
 to install the dependencies i used " uv pip install library names"
 
+
+Loaded different dataset to analyses purpose ... like
+titanic.csv
+Netflix.csv
+superstore.csv
+heart.csv
+
+TASK 1:
+
+built a reusable data ingestion module that can later support:
+
+CSV files
+Excel files
+Large datasets
+Database imports
+APIs
+
+so we first take the input from the user using
+input_file =input("Enter the file name")
+extension  = input_file.split('.')[-1].lower()
+
+so the above code takes the input file and splits the file name based on the operator "." and creates an list [heart,csv] now we use [-1] to take the last value that is csv and lower it 
+
+now we changed the code from the input_file.split('.') to Path()
+because Path uses the input file address as an Object instead of string so that we can use .suffixes for getting the extension name , .stem for file name and many more useful function calls.
+
+from pathlib import Path
+import pandas as pd
+
+
+def load_dataset(file_path : str ) -> pd.DataFrame:
+    """
+    Loads a dataset from a CSV or Excel file.
+    Parameters
+    ----------
+    file_path : str
+
+    Returns
+    -------
+    pd.DataFrame
+    """
+    file_extension = Path(file_path).suffixes[-1].lower()
+    #
+    SUPPORTED_EXCEL_EXTENSIONS = [".xls", ".xlsx", ".xlsm", ".xlsb"]
+
+    try:
+        if file_extension == ".csv":
+            df = pd.read_csv(file_path)
+        elif file_extension in SUPPORTED_EXCEL_EXTENSIONS:
+            df = pd.read_excel(file_path)
+        else:
+            print("Unsupported file format. Please provide a CSV or Excel file.")
+            return pd.DataFrame()  # Return an empty DataFrame
+        return df
+    except FileNotFoundError:
+        print("File not found. Please check the file path.")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return pd.DataFrame()
+
+last we will change this to create a custom files.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DAY 2
+
+1. Structural Metadata 📐
+These give you a high-level view of how your dataset is constructed:
+
+📏 df.shape: Returns a tuple showing the total size: (number of rows, number of columns). (Note: it's an attribute, so no parentheses () at the end!)
+
+🏷️ df.columns: Lists all the column names in your DataFrame.
+
+🧬 df.dtypes: Shows the data type of each column (e.g., int64, float64, object/string, datetime).
+
+🎯 df.select_dtypes(include=[...]): Filters your DataFrame to keep only columns of specific data types (e.g., select only numerical columns with include='number').
+
+2. Data Health Diagnostics 🧹
+These help you spot quality issues like missing data or duplicate records:
+
+❓ df.isnull(): Returns a boolean DataFrame (True/False) indicating where values are missing (NaN).
+
+👯 df.duplicated(): Returns a boolean Series showing True for rows that are exact duplicates of a previous row.
+
+3. Statistical Summaries 📊
+These help you understand the distribution and variety of your data:
+
+📈 df.describe(): Calculates key statistics for numerical columns—including count, mean, standard deviation, min, max, and percentiles (25%, 50%, 75%).
+
+🔢 df.nunique(): Returns the count of distinct (unique) values in each column.
+
+
+
+Note:
+we use a return type as dictionary as to why because we can later ask in the UI for the specific value and display it.
+
+
+
+def get_basic_info(df):
+    """Return rows, columns, memory usage, etc."""
+    row_count, column_count = df.shape
+    memory_usage = df.memory_usage(deep=True).sum()
+    columns_name = df.columns.to_list()   # returns an Index object, convert to list
+    columns_types = df.dtypes.to_dict()   # returns a Series object, convert to dict
+    return {
+        "rows_count": row_count,
+        "columns_count": column_count,
+        "columns_name": columns_name,
+        "columns_types": columns_types,
+        "memory_usage_bytes": memory_usage
+    }
+
+create a get basic info api call
+
+
+Why remove a constant column?
+
+Suppose your dataset has:
+
+age	salary	country	company
+25	40000	India	ABC
+30	50000	India	ABC
+28	45000	India	ABC
+35	60000	India	ABC
+
+company has only one value: "ABC".
+
+For every row:
+
+company = ABC
+
+So it provides zero information for distinguishing one observation from another.
+
+For a machine-learning model, it has essentially no predictive value.
+
+Compare the three cases
